@@ -8,15 +8,22 @@ import zipfile
 import requests
 import io
 
-
-url = "https://raw.githubusercontent.com/yousefsameh21/Customer_Churn_project/refs/heads/main/cleaned_df.zip"
-r = requests.get(url)
+# ========== تحميل ملف البيانات ==========
+url_df = "https://raw.githubusercontent.com/yousefsameh21/Customer_Churn_project/refs/heads/main/cleaned_df.zip"
+r = requests.get(url_df)
 z = zipfile.ZipFile(io.BytesIO(r.content))
 df = pd.read_csv(z.open("cleaned_df.csv"), index_col=0)
 
-url = "https://raw.githubusercontent.com/yousefsameh21/Customer_Churn_project/refs/heads/main/Decision_Tree.zip"
-response = requests.get(url)
-model = joblib.load(io.BytesIO(response.content))
+# ========== تحميل النموذج Decision Tree ==========
+url_model = "https://raw.githubusercontent.com/yousefsameh21/Customer_Churn_project/refs/heads/main/Decision_Tree.zip"
+r2 = requests.get(url_model)
+z2 = zipfile.ZipFile(io.BytesIO(r2.content))
+
+# فك الضغط وقراءة ملف الـ .pkl من داخل الـ zip
+with z2.open("Decision_Tree.pkl") as model_file:
+    model = joblib.load(model_file)
+
+print("✅ الملفات تم تحميلها وتشغيلها بنجاح!")
 page=st.sidebar.radio('Pages',['Home','Uni-Variate Analysis', 'Bi-Variate Analysis', 'Multi-Variate Analysis','Model Prediction'])
 if page=='Home':
     st.markdown("<h1 style='text-align: center; color: Silver; '>Customer Churn Project</h1>", unsafe_allow_html=True)
@@ -197,6 +204,7 @@ else:
             st.error('🔴 Churn Customer')
 
     
+
 
 
 
