@@ -14,8 +14,9 @@ r = requests.get(url)
 z = zipfile.ZipFile(io.BytesIO(r.content))
 df = pd.read_csv(z.open("cleaned_df.csv"), index_col=0)
 
-model = joblib.load('Decision_Tree.pkl')
-page=st.sidebar.radio('Pages',['Home','Uni-Variate Analysis', 'Bi-Variate Analysis', 'Multi-Variate Analysis','Model Prediction'])
+url = "https://raw.githubusercontent.com/username/customer_churn_project/main/Decision_Tree.pkl"
+response = requests.get(url)
+model = joblib.load(io.BytesIO(response.content))page=st.sidebar.radio('Pages',['Home','Uni-Variate Analysis', 'Bi-Variate Analysis', 'Multi-Variate Analysis','Model Prediction'])
 if page=='Home':
     st.markdown("<h1 style='text-align: center; color: Silver; '>Customer Churn Project</h1>", unsafe_allow_html=True)
     st.image('https://media.licdn.com/dms/image/v2/D4D12AQEVyfblBXjyJQ/article-cover_image-shrink_600_2000/article-cover_image-shrink_600_2000/0/1664222940349?e=2147483647&v=beta&t=3CyUZB2EBfKYgRLkoggeC3S3hjaHDOo9a54pZZHqLO0')
@@ -195,5 +196,6 @@ else:
             st.error('🔴 Churn Customer')
 
     
+
 
 
