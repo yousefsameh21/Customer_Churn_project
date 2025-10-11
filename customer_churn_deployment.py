@@ -4,9 +4,16 @@ import pandas as pd
 import seaborn as sns
 import plotly.express as px
 import joblib
+import zipfile
+import requests
+import io
 
 
-df = pd.read_csv('cleaned_df.csv',index_col=0)
+url = "https://raw.githubusercontent.com/username/customer_churn_project/main/cleaned_df.zip"
+r = requests.get(url)
+z = zipfile.ZipFile(io.BytesIO(r.content))
+df = pd.read_csv(z.open("cleaned_df.csv"), index_col=0)
+
 model = joblib.load('Decision_Tree.pkl')
 page=st.sidebar.radio('Pages',['Home','Uni-Variate Analysis', 'Bi-Variate Analysis', 'Multi-Variate Analysis','Model Prediction'])
 if page=='Home':
@@ -188,3 +195,4 @@ else:
             st.error('🔴 Churn Customer')
 
     
+
