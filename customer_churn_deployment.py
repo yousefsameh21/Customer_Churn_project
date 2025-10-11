@@ -14,7 +14,7 @@ r = requests.get(url)
 z = zipfile.ZipFile(io.BytesIO(r.content))
 df = pd.read_csv(z.open("cleaned_df.csv"), index_col=0)
 
-url = "https://raw.githubusercontent.com/username/customer_churn_project/main/Decision_Tree.pkl"
+url = "https://raw.githubusercontent.com/yousefsameh21/Customer_Churn_project/refs/heads/main/Decision_Tree.zip"
 response = requests.get(url)
 model = joblib.load(io.BytesIO(response.content))page=st.sidebar.radio('Pages',['Home','Uni-Variate Analysis', 'Bi-Variate Analysis', 'Multi-Variate Analysis','Model Prediction'])
 if page=='Home':
@@ -196,6 +196,7 @@ else:
             st.error('🔴 Churn Customer')
 
     
+
 
 
 
