@@ -9,7 +9,7 @@ import requests
 import io
 
 
-url = "https://raw.githubusercontent.com/yousefsameh21/customer_churn_project/main/cleaned_df.zip"
+url = "https://raw.githubusercontent.com/yousefsameh21/Customer_Churn_project/refs/heads/main/cleaned_df.zip"
 r = requests.get(url)
 z = zipfile.ZipFile(io.BytesIO(r.content))
 df = pd.read_csv(z.open("cleaned_df.csv"), index_col=0)
@@ -196,6 +196,7 @@ else:
             st.error('🔴 Churn Customer')
 
     
+
 
 
 
